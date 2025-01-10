@@ -2,6 +2,9 @@ package com.robert.funflix.core.data
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.ANDROID
 import io.ktor.client.plugins.logging.LogLevel
@@ -13,6 +16,9 @@ import kotlinx.serialization.json.Json
 object HttpClientFactory {
 
     fun createClient(engine: HttpClientEngine): HttpClient{
+        val accessToken = BuildConfig.tmdbAccessToken
+        println("Access token:: $accessToken")
+
         return HttpClient(engine){
             expectSuccess = true
             install(Logging){
@@ -26,6 +32,17 @@ object HttpClientFactory {
                     isLenient = true
                     ignoreUnknownKeys = true
                 })
+            }
+
+            install(Auth){
+                bearer {
+                    loadTokens {
+                        BearerTokens(
+                            accessToken = accessToken,
+                            refreshToken = ""
+                        )
+                    }
+                }
             }
         }
     }
