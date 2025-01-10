@@ -1,5 +1,6 @@
 package com.robert.funflix.core.data
 
+import com.robert.funflix.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.auth.Auth
@@ -16,7 +17,7 @@ import kotlinx.serialization.json.Json
 object HttpClientFactory {
 
     fun createClient(engine: HttpClientEngine): HttpClient{
-        val accessToken = BuildConfig.tmdbAccessToken
+        val accessToken = BuildConfig.TMDB_ACCESS_TOKEN
         println("Access token:: $accessToken")
 
         return HttpClient(engine){

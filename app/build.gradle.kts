@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
 }
 
+val accessToken: String = project.findProperty("TMDB_ACCESS_TOKEN") as String? ?: ""
+
 android {
     namespace = "com.robert.funflix"
     compileSdk = 35
@@ -15,11 +17,15 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        buildConfigField("", "", "")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        getByName("debug") {
+            buildConfigField("String", "TMDB_ACCESS_TOKEN", "\"$accessToken\"")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -37,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
