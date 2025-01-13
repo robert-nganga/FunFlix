@@ -6,9 +6,13 @@ import org.json.JSONObject
 
 object ConfigHelper {
     fun getAccessToken(context: Context): String {
-        val inputStream = context.resources.openRawResource(R.raw.config)
-        val jsonString = inputStream.bufferedReader().use { it.readText() }
-        val jsonObject = JSONObject(jsonString)
-        return jsonObject.getString("access_token")
+        return try {
+            val inputStream = context.resources.openRawResource(R.raw.config)
+            val jsonString = inputStream.bufferedReader().use { it.readText() }
+            val jsonObject = JSONObject(jsonString)
+            jsonObject.getString("access_token")
+        } catch (e: Exception){
+            ""
+        }
     }
 }
