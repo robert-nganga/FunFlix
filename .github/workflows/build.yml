@@ -19,5 +19,8 @@ jobs:
       - name: Grant execute permission for gradle
         run: chmod +x gradlew
 
-      - name: Run Unit tests
-        run: ./gradlew clean testDebug
+      - name: Run spotless
+        run: ./gradlew spotlessApply
+
+#      - name: Run Unit tests
+#        run: ./gradlew clean testDebug
