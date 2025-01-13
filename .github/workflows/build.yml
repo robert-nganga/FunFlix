@@ -22,5 +22,12 @@ jobs:
       - name: Run spotless
         run: ./gradlew spotlessApply
 
+      - name: Create config.json in raw folder
+        run: |
+          mkdir -p app/src/main/res/raw
+          echo '{
+            "access_token": "your_access_token_here"
+          }' > app/src/main/res/raw/config.json
+
 #      - name: Run Unit tests
 #        run: ./gradlew clean testDebug
