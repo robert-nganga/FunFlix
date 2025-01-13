@@ -1,6 +1,6 @@
 package com.robert.funflix.core.data
 
-import com.robert.funflix.BuildConfig
+import android.content.Context
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.auth.Auth
@@ -16,9 +16,8 @@ import kotlinx.serialization.json.Json
 
 object HttpClientFactory {
 
-    fun createClient(engine: HttpClientEngine): HttpClient{
-        val accessToken = BuildConfig.TMDB_ACCESS_TOKEN
-        println("Access token:: $accessToken")
+    fun createClient(engine: HttpClientEngine, context: Context): HttpClient{
+        val accessToken = ConfigHelper.getAccessToken(context)
 
         return HttpClient(engine){
             expectSuccess = true

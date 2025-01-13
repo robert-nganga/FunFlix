@@ -5,5 +5,5 @@ import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.dsl.module
 
 val appModule = module {
-    single { HttpClientFactory.createClient(engine = OkHttp.create()) }
+    single { HttpClientFactory.createClient(engine = OkHttp.create(), context = get()) }
 }
