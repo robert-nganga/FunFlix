@@ -29,8 +29,14 @@ jobs:
             "access_token": "your_access_token_here"
           }' > app/src/main/res/raw/config.json
 
-      - name: Run Unit tests
-        run: ./gradlew clean testDebug
+      - name: Execute unit tests
+        run: ./gradlew test --stacktrace
+
+      - name: Generate test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit_tests_report.html
+          path: app/build/reports/tests/testDebugUnitTest/
 
       - name: Build app
-        run: .gradlew assembleDebug
+        run: ./gradlew assembleDebug
