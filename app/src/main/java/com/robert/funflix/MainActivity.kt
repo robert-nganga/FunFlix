@@ -14,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,7 +21,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.robert.funflix.core.data.BASE_URL
 import com.robert.funflix.ui.theme.FunFlixTheme
@@ -34,7 +32,6 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.compose.KoinAndroidContext
 
 class MainActivity : ComponentActivity() {
-
     private val httpClient: HttpClient by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,14 +44,16 @@ class MainActivity : ComponentActivity() {
                     var movies by remember { mutableStateOf("") }
                     val scope = rememberCoroutineScope()
                     Scaffold(
-                        modifier = Modifier
-                            .fillMaxSize()
+                        modifier =
+                        Modifier
+                            .fillMaxSize(),
                     ) { innerPadding ->
                         Column(
-                            modifier = Modifier
+                            modifier =
+                            Modifier
                                 .fillMaxSize()
                                 .padding(innerPadding),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Button(
                                 onClick = {
@@ -64,22 +63,22 @@ class MainActivity : ComponentActivity() {
                                             val result = httpClient.get("$BASE_URL/movie/popular?language=en-US&page=1")
                                             movies = result.bodyAsText()
                                             isLoading = false
-                                        } catch (e: Exception){
+                                        } catch (e: Exception) {
                                             e.printStackTrace()
                                             isLoading = false
                                         }
                                     }
-
-                                }
+                                },
                             ) {
                                 Text("Get movies")
                             }
                             Spacer(modifier = Modifier.height(10.dp))
                             Box(
-                                modifier = Modifier
+                                modifier =
+                                Modifier
                                     .fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ){
+                                contentAlignment = Alignment.Center,
+                            ) {
                                 if (isLoading) {
                                     CircularProgressIndicator()
                                 } else {
@@ -93,4 +92,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-

@@ -15,31 +15,35 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 object HttpClientFactory {
-
-    fun createClient(engine: HttpClientEngine, context: Context): HttpClient{
+    fun createClient(
+        engine: HttpClientEngine,
+        context: Context,
+    ): HttpClient {
         val accessToken = ConfigHelper.getAccessToken(context)
 
-        return HttpClient(engine){
+        return HttpClient(engine) {
             expectSuccess = true
-            install(Logging){
+            install(Logging) {
                 logger = Logger.ANDROID
                 level = LogLevel.ALL
             }
 
-            install(ContentNegotiation){
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        prettyPrint = true
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                    },
+                )
             }
 
-            install(Auth){
+            install(Auth) {
                 bearer {
                     loadTokens {
                         BearerTokens(
                             accessToken = accessToken,
-                            refreshToken = ""
+                            refreshToken = "",
                         )
                     }
                 }

@@ -10,15 +10,13 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.KoinConfiguration
 
 @OptIn(KoinExperimentalAPI::class)
-class FunFlixApp: Application(), KoinStartup {
-
-
+class FunFlixApp :
+    Application(),
+    KoinStartup {
     @KoinExperimentalAPI
-    override fun onKoinStartup(): KoinConfiguration {
-        return KoinConfiguration {
-            androidLogger()
-            androidContext(this@FunFlixApp)
-            modules(appModule, viewModelModule)
-        }
+    override fun onKoinStartup(): KoinConfiguration = KoinConfiguration {
+        androidLogger()
+        androidContext(this@FunFlixApp)
+        modules(appModule, viewModelModule)
     }
 }
